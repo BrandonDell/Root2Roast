@@ -1,0 +1,51 @@
+[
+    {
+      "name": "Photography",
+      "description": "The art of capturing moments through the lens of a camera, focusing on composition, lighting, and subject."
+    },
+    {
+      "name": "Gardening",
+      "description": "The practice of growing and cultivating plants as part of horticulture, often for aesthetic, recreational, or nutritional purposes."
+    },
+    {
+      "name": "Cooking",
+      "description": "The skill or process of preparing food by combining, mixing, and heating ingredients to create meals and dishes."
+    },
+    {
+      "name": "Hiking",
+      "description": "Walking long distances in natural environments, typically on trails or paths, for recreational and fitness purposes."
+    },
+    {
+      "name": "Painting",
+      "description": "The practice of applying pigment to a surface such as canvas, wood, paper, or a wall to create an artwork."
+    },
+    {
+      "name": "Cycling",
+      "description": "The activity of riding a bicycle for recreation, sport, or transportation, often enjoyed on roads or trails."
+    },
+    {
+      "name": "Reading",
+      "description": "The act of interpreting written or printed words and symbols to understand and derive meaning from them, often for enjoyment or education."
+    },
+    {
+      "name": "Knitting",
+      "description": "A method of creating fabric by interlocking loops of yarn with needles, commonly used to make garments and accessories."
+    },
+    {
+      "name": "Traveling",
+      "description": "The act of exploring new places and experiencing different cultures, landscapes, and cuisines, often for leisure or adventure."
+    },
+    {
+      "name": "Fishing",
+      "description": "The activity of catching fish, either for food, sport, or recreation, using various techniques and equipment."
+    },
+    {
+      "name": "Woodworking",
+      "description": "The craft of creating objects from wood, including furniture, sculptures, and other decorative or functional items."
+    },
+    {
+      "name": "Yoga",
+      "description": "A practice that combines physical postures, breathing exercises, and meditation to promote physical and mental well-being."
+    }
+  ]
+  
