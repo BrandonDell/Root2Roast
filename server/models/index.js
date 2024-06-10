@@ -1,4 +1,4 @@
 const User = require("./User");
-const Hobbies = require("./Hobbies");
+const Hobby = require("./Hobby");
 
-module.exports = { User, Hobbies };
+module.exports = { User, Hobby };
