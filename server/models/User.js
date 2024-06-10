@@ -22,10 +22,10 @@ const userSchema = new Schema({
   interests: {
     type: [String],
   },
-  groups: [
+  hobby: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Group',
+      ref: 'Hobby',
     },
   ],
 });
