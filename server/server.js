@@ -3,7 +3,6 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
@@ -16,6 +15,7 @@ const server = new ApolloServer({
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
+  try { 
   await server.start();
 
   app.use(express.urlencoded({ extended: false }));
@@ -39,6 +39,9 @@ const startApolloServer = async () => {
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });
   });
+  } catch (error) {
+    console.error('error starting Apollo Server:', error);
+}
 };
 
 // Call the async function to start the server

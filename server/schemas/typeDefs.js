@@ -6,15 +6,13 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    interests: [String]
-    hobby: [Hobby]
+    hobbies: [Hobby]
   }
 
   type Hobby {
     _id: ID
-    Name: String!
+    name: String!
     description: String!
-    members: [User]
     comments: [Comment]
   }
 
@@ -29,11 +27,20 @@ const typeDefs = `
     token: ID!
     user: User
   }
+  input HobbyInput{
+    name: String!
+    description: String!
+  }
+  input CommentInput{
+    commentText: String
+    commentAuthor: String
+    createdAt: String
+  }
 
   type Query {
     users: [User]
     user(username: String!): User
-    hobbies(username: String): [Hobby]
+    hobbies: [Hobby]
     hobby(hobbyId: ID!): Hobby
     me: User
   }
@@ -41,10 +48,10 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addHobby(name: String!, description: String!, members: [String]!): Hobby
-    updateHobby(hobbyId: ID!, name: String, description: String!, members: [String]!): Monster
-      removeHobby(hobbyId: ID!): Hobby
-    addComment(hobbyId: ID!, commentText: String!): Hobby
+    addHobby(hobbyData: HobbyInput!): Hobby
+    updateHobby(hobbyId: ID!, name: String, description: String!): Hobby
+    removeHobby(hobbyId: ID!): Hobby
+    addComment(commentData: CommentInput!, hobbyId: ID!): Hobby
     updateComment(hobbyId: ID!, commentId: ID!, commentText: String!): Hobby
     removeComment(hobbyId: ID!, commentId: ID!): Hobby
   }

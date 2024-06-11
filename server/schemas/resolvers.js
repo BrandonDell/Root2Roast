@@ -1,4 +1,4 @@
-const { User, hobby } = require("../models");
+const { User, Hobby } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
@@ -10,16 +10,16 @@ const resolvers = {
       return User.findOne({ username }).populate("hobbies");
     },
     hobbies: async () => {
-      return hobby.find().sort({ name: 1 });
+      return Hobby.find().sort({ name: 1 });
     },
     hobby: async (parent, { hobbyId }) => {
-      return hobby.findOne({ _id: hobbyId });
+      return Hobby.findOne({ _id: hobbyId });
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("comments");
+        return User.findOne({ _id: context.user._id }).populate("hobbies");
       }
-      throw AuthenticationError;
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 
@@ -33,34 +33,40 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw AuthenticationError;
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw AuthenticationError;
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const token = signToken(user);
 
       return { token, user };
     },
-    addhobby: async (parent, { name, description }) => {
-      const hobby = await hobby.create({
-        name,
-        description,
-      });
-
+    // addHobby: async (parent, { hobbyData }, context) => {
+    //   const hobby = await User.findByIdAndUpdate(
+    //     { _id: context.user._id },
+    //     { $push: { hobby: hobbyData } },
+    //     { new: true }
+        
+    //   );
+    // },
+    
+    addHobby: async (parent, { hobbyData }) => {
+      const hobby = new Hobby(hobbyData);
+      await hobby.save();
       return hobby;
     },
-    addComment: async (parent, { hobbyId, commentText }, context) => {
+    addComment: async (parent, { commentData, hobbyId }, context) => {
       if (context.user) {
-        return hobby.findOneAndUpdate(
+        return Hobby.findOneAndUpdate(
           { _id: hobbyId },
           {
             $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
+              comments: commentData,
             },
           },
           {
@@ -69,10 +75,10 @@ const resolvers = {
           }
         );
       }
-      throw AuthenticationError;
+      throw new AuthenticationError("You need to be logged in!");
     },
-    removehobby: async (parent, { hobbyId }, context) => {
-      const hobby = await hobby.findOneAndDelete({
+    removeHobby: async (parent, { hobbyId }) => {
+      const hobby = await Hobby.findOneAndDelete({
         _id: hobbyId,
       });
 
@@ -80,7 +86,7 @@ const resolvers = {
     },
     removeComment: async (parent, { hobbyId, commentId }, context) => {
       if (context.user) {
-        return hobby.findOneAndUpdate(
+        return Hobby.findOneAndUpdate(
           { _id: hobbyId },
           {
             $pull: {
@@ -93,24 +99,24 @@ const resolvers = {
           { new: true }
         );
       }
-      throw AuthenticationError;
+      throw new AuthenticationError("You need to be logged in!");
     },
     updateComment: async (parent, { hobbyId, commentId, commentText }) => {
-      return hobby.findOneAndUpdate(
+      return Hobby.findOneAndUpdate(
         { _id: hobbyId, "comments._id": commentId },
         { $set: { "comments.$.commentText": commentText } },
         { new: true }
       );
     },
-    updatehobby: async (
+    updateHobby: async (
       parent,
-      { hobbyId, name, type, habitat, weaknesses }
+      { hobbyId, name, description }
     ) => {
       const updateFields = {};
       if (name) updateFields.name = name;
       if (description) updateFields.description = description;
 
-      return hobby.findOneAndUpdate(
+      return Hobby.findOneAndUpdate(
         { _id: hobbyId },
         { $set: updateFields },
         { new: true }
