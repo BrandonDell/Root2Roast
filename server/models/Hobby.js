@@ -10,7 +10,7 @@ const hobbySchema = new Schema({
         type: String,
         required: true,
     },
-    members: [{
+    users: [{
         type: Schema.Types.Obj,
         ref: 'User',
     }],

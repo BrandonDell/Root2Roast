@@ -1,6 +1,6 @@
-# HobbyExchange
+# Root2Roast
 
-We are a platform designed for enthusiasts of all kinds to come together and celebrate their passions. Whether you're into photography, gardening, cooking, or any other hobby, Hobby Exchange is the best place to connect, share, and discover new interests. 
+We are a platform designed for enthusiasts of all kinds to come together and celebrate their passions. Whether you're into gardening, cooking, photography, or any other hobby, Hobby Exchange is the best place to connect, share, and discover new interests. 
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ We aim to create a positive and supportive community where people can connect, l
 
 ## What does it solve and provide?
 
-Hobby Exchange will provide a personalized profiles, communities & groups, inspiration & discovery, and an activity feed. We aim to expand by offering tutorials and guides in a learning center, as well as a market place. 
+Root2Roast will provide a personalized profiles, communities & groups, inspiration & discovery, and an activity feed. We aim to expand by offering tutorials and guides in a learning center, as well as a market place. 
 
 ## Features
 

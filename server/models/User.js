@@ -19,9 +19,6 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  interests: {
-    type: [String],
-  },
   hobby: [
     {
       type: Schema.Types.ObjectId,
