@@ -1,33 +1,97 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useMutation } from "@apollo/client";
+import { UPDATE_HOBBY } from "../utils/mutations";
+import { QUERY_HOBBIES } from "../utils/queries";
 
-const HobbyList = ({ hobbies }) => {
-  if (!hobbies.length) {
-    return <h3>No hobbies Yet</h3>;
-  }
-  console.log(hobbies);
+const UpdateHobbyForm = ({
+  hobbyId,
+  initialHobbiesData,
+  handleCloseUpdateHobbyModal,
+}) => {
+  const [formState, setFormState] = useState({
+    name: initialHobbyData.name,
+    description: initialHobbyData.description,
+  });
+
+  useEffect(() => {
+    setFormState({
+      name: initialHobbyData.name,
+      description: initialHobbyData.description,
+    });
+  }, [initialHobbyData]);
+
+  const [updateHobby, { error }] = useMutation(UPDATE_HOBBY, {
+    refetchQueries: [{ query: QUERY_HOBBIES }],
+  });
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await updateHobby({ variables: { hobbyId, ...formState } });
+      setFormState({
+        name: "",
+        description: "",
+      });
+      handleCloseUpdateHobbyModal();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({ ...formState, [name]: value });
+  };
+
+  const handleDescriptionChange = (event, index) => {
+    const newdescription = [...formState.description];
+    newdescription[index] = event.target.value;
+    setFormState({ ...formState, description: newdescription });
+  };
+
+  const handleRemoveDescription = (index) => {
+    const newdescription = [...formState.description];
+    newdescription.splice(index, 1);
+    setFormState({ ...formState, description: newdescription });
+  };
+
+  const addDescription = () => {
+    setFormState({ ...formState, description: [...formState.description, ""] });
+  };
+
   return (
-    <div>
-      {hobbies &&
-        hobbies.map((hobby) => (
-          <div key={hobby._id} className='card mb-3'>
-            <h4 className='card-header bg-dark text-light p-2 m-0'>
-              {hobby.name}
-            </h4>
-            <div className='card-body bg-light p-2'>
-              <h5>Description:</h5>
-              <p>{hobby.description}</p>
-              <h5>Habitat:</h5>
-            </div>
-            <Link
-              className='btn btn-primary btn-block btn-squared'
-              to={`/hobbies/${hobby._id}`}
-            >
-              Join the discussion on this hobby.
-            </Link>
-          </div>
-        ))}
-    </div>
+    <form onSubmit={handleFormSubmit}>
+      <input
+        name='name'
+        value={formState.name}
+        onChange={handleChange}
+        placeholder='Hobby Name'
+      />
+      <input
+        name='description'
+        value={formState.description}
+        onChange={handleChange}
+        placeholder='Description'
+      />
+      {formState.description.map((description, index) => (
+        <div key={index}>
+          <input
+            value={description}
+            onChange={(event) => handleDescriptionChange(event, index)}
+            placeholder='Description'
+          />
+          <button type='button' onClick={() => handleRemoveDescription(index)}>
+            Remove
+          </button>
+        </div>
+      ))}
+      <button type='button' onClick={addDescription}>
+        Add Description
+      </button>
+      <button type='submit'>Update Hobby</button>
+      {error && <div>Error: {error.message}</div>}
+    </form>
   );
 };
 
-export default HobbyList;
+export default UpdateHobbyForm;

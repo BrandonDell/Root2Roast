@@ -1,96 +1,97 @@
-import React from 'react'
-
-const commentList = () => {
-  return (
-    <div>commentList</div>
-  )
-}
-
-export default commentListimport { useState } from "react";
-import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
-
-import { ADD_COMMENT } from "../../utils/mutations";
-
+import { useState } from "react";
+import UpdateCommentForm from "../updateCommentForm";
 import Auth from "../../utils/auth";
+import { useMutation } from "@apollo/client";
+import { REMOVE_COMMENT } from "../../utils/mutations";
 
-const CommentForm = ({ monsterId }) => {
-  const [commentText, setCommentText] = useState("");
-  const [characterCount, setCharacterCount] = useState(0);
+const CommentList = ({ comments = [], hobbyId }) => {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedComment, setSelectedComment] = useState(null);
 
-  const [addComment, { error }] = useMutation(ADD_COMMENT);
+  const handleUpdateComment = (commentId) => {
+    // Set the selected comment id and show the modal
+    setSelectedComment(commentId);
+    setShowUpdateModal(true);
+  };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
+  const [removeComment] = useMutation(REMOVE_COMMENT);
+  const handleDeleteComment = async (commentId) => {
     try {
-      const { data } = await addComment({
-        variables: {
-          monsterId,
-          commentText,
-          commentAuthor: Auth.getProfile().data.username,
-        },
+      await removeComment({
+        variables: { hobbyId, commentId },
       });
-
-      setCommentText("");
-    } catch (err) {
-      console.error(err);
+      // Optionally, you can update the comment list after deletion
+    } catch (error) {
+      console.error("Error deleting comment:", error);
     }
   };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    if (name === "commentText" && value.length <= 280) {
-      setCommentText(value);
-      setCharacterCount(value.length);
-    }
+  const handleCloseModal = () => {
+    // Reset selected comment and hide the modal
+    setSelectedComment(null);
+    setShowUpdateModal(false);
   };
+
+  if (!comments.length) {
+    return <h3>No Comments Yet</h3>;
+  }
 
   return (
-    <div>
-      <h4>What are your thoughts on this monster?</h4>
-
-      {Auth.loggedIn() ? (
-        <>
-          <p
-            className={`m-0 ${
-              characterCount === 280 || error ? "text-danger" : ""
-            }`}
-          >
-            Character Count: {characterCount}/280
-            {error && <span className='ml-2'>{error.message}</span>}
-          </p>
-          <form
-            className='flex-row justify-center justify-space-between-md align-center'
-            onSubmit={handleFormSubmit}
-          >
-            <div className='col-12 col-lg-9'>
-              <textarea
-                name='commentText'
-                placeholder='Add your comment...'
-                value={commentText}
-                className='form-input w-100'
-                style={{ lineHeight: "1.5", resize: "vertical" }}
-                onChange={handleChange}
-              ></textarea>
+    <>
+      <h3
+        className='p-5 display-inline-block'
+        style={{ borderBottom: "1px dotted #1a1a1a" }}
+      >
+        Comments
+      </h3>
+      <div className='flex-row my-4'>
+        {comments &&
+          comments.map((comment) => (
+            <div key={comment._id} className='col-12 mb-3 pb-3'>
+              <div className='p-3 bg-dark text-light'>
+                <h5 className='card-header'>
+                  {comment.commentAuthor} commented{" "}
+                  <span style={{ fontSize: "0.825rem" }}>
+                    on {comment.createdAt}
+                  </span>
+                </h5>
+                <p className='card-body'>{comment.commentText}</p>
+                {Auth.loggedIn() &&
+                  Auth.getProfile().data.username === comment.commentAuthor && (
+                    <div>
+                      <button onClick={() => handleUpdateComment(comment._id)}>
+                        Edit
+                      </button>
+                      <button onClick={() => handleDeleteComment(comment._id)}>
+                        Delete
+                      </button>
+                    </div>
+                  )}
+              </div>
             </div>
-
-            <div className='col-12 col-lg-3'>
-              <button className='btn btn-primary btn-block py-3' type='submit'>
-                Add Comment
-              </button>
+          ))}
+        {showUpdateModal && (
+          <div className='modal'>
+            <div className='modal-content'>
+              {/* Pass comment id and initial comment text to UpdateCommentForm */}
+              <UpdateCommentForm
+                hobbyId={hobbyId}
+                commentId={selectedComment}
+                handleCloseModal={handleCloseModal}
+                initialCommentText={
+                  comments.find((comment) => comment._id === selectedComment)
+                    ?.commentText
+                }
+                onUpdate={() => {
+                  handleCloseModal(); // Close modal after updating
+                }}
+              />
+              <button onClick={handleCloseModal}>Close</button>
             </div>
-          </form>
-        </>
-      ) : (
-        <p>
-          You need to be logged in to share your monsters. Please{" "}
-          <Link to='/login'>login</Link> or <Link to='/signup'>signup.</Link>
-        </p>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
-export default CommentForm;
+export default CommentList;

@@ -16,7 +16,7 @@ export const QUERY_HOBBIES = gql`
       _id
       name
       description
-      members
+      users
       comments {
         _id
         commentText
@@ -33,7 +33,7 @@ export const QUERY_SINGLE_HOBBY = gql`
       _id
       name
       description
-      members
+      users
       comments {
         _id
         commentText
