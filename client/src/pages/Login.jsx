@@ -54,11 +54,11 @@ const Login = (props) => {
 
   return (
     <Container component="main" maxWidth="sm">
-      <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
+      <Box display="flex" flexDirection="column" alignItems="center" mt={10}>
         <Card>
           <CardHeader
             title="Login"
-            sx={{ backgroundColor: "dark", color: "white", p: 2 }}
+            sx={{ color: "black", p: 2, textAlign: "center" }}
           />
           <CardContent>
             {data ? (
@@ -99,7 +99,7 @@ const Login = (props) => {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  sx={{ mt: 3, mb: 2, backgroundColor:"#384e1d" }}
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#384e1d" }}
                 >
                   Submit
                 </Button>

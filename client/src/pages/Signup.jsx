@@ -55,7 +55,7 @@ const Signup = () => {
         <Card>
           <CardHeader
             title="Sign Up"
-            sx={{ backgroundColor: "dark", color: "white", p: 2 }}
+            sx={{ color: "black", p: 2, textAlign: "center" }}
           />
           <CardContent>
             {data ? (
@@ -108,7 +108,7 @@ const Signup = () => {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  sx={{ mt: 3, mb: 2, backgroundColor:"#384e1d" }}
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#384e1d" }}
                 >
                   Submit
                 </Button>
