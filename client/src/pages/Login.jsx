@@ -1,12 +1,24 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
 
-import Auth from '../utils/auth';
+import Auth from "../utils/auth";
+
+import {
+  Container,
+  Box,
+  Card,
+  CardHeader,
+  CardContent,
+  TextField,
+  Button,
+  Typography,
+  Alert,
+} from "@mui/material";
 
 const Login = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
@@ -35,59 +47,74 @@ const Login = (props) => {
 
     // clear form values
     setFormState({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     });
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
+    <Container component="main" maxWidth="sm">
+      <Box display="flex" flexDirection="column" alignItems="center" mt={10}>
+        <Card>
+          <CardHeader
+            title="Login"
+            sx={{ color: "black", p: 2, textAlign: "center" }}
+          />
+          <CardContent>
             {data ? (
-              <p>
-                Success! You may now head{' '}
+              <Typography variant="body1">
+                Success! You may now head{" "}
                 <Link to="/">back to the homepage.</Link>
-              </p>
+              </Typography>
             ) : (
               <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your email"
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Your email"
                   name="email"
-                  type="email"
+                  autoComplete="email"
+                  autoFocus
                   value={formState.email}
                   onChange={handleChange}
                 />
-                <input
-                  className="form-input"
-                  placeholder="******"
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
                   name="password"
+                  label="Password"
                   type="password"
+                  id="password"
+                  autoComplete="current-password"
                   value={formState.password}
                   onChange={handleChange}
                 />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
+                <Button
                   type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 3, mb: 2, backgroundColor: "#384e1d" }}
                 >
                   Submit
-                </button>
+                </Button>
               </form>
             )}
 
             {error && (
-              <div className="my-3 p-3 bg-danger text-white">
+              <Alert severity="error" sx={{ mt: 3 }}>
                 {error.message}
-              </div>
+              </Alert>
             )}
-          </div>
-        </div>
-      </div>
-    </main>
+          </CardContent>
+        </Card>
+      </Box>
+    </Container>
   );
 };
 

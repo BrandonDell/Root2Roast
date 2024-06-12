@@ -15,6 +15,9 @@ const Footer = () => {
         mt: "auto",
         backgroundColor: "#384e1d",
         color: "#fff",
+        position: "fixed",
+        bottom: 0,
+        width: "100%",
       }}
     >
       <Container maxWidth="md" sx={{ display: "flex", gap: "20px" }}>
