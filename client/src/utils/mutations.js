@@ -24,31 +24,25 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_MONSTER = gql`
-  mutation addMonster(
-    $monsterName: String!
-    $type: String!
-    $habitat: String!
-    $weaknesses: [String]!
+export const ADD_HOBBY = gql`
+  mutation addHobby(
+    $name: String!
+    $description: String!
   ) {
-    addMonster(
-      monsterName: $monsterName
-      type: $type
-      habitat: $habitat
-      weaknesses: $weaknesses
+    addHobby(
+      name: $name
+      description: $description
     ) {
-      weaknesses
-      habitat
-      type
-      monsterName
+      description
+      name
       _id
     }
   }
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($monsterId: ID!, $commentText: String!) {
-    addComment(monsterId: $monsterId, commentText: $commentText) {
+  mutation addComment($hobbyId: ID!, $commentText: String!) {
+    addComment(hobbyId: $hobbyId, commentText: $commentText) {
       _id
       comments {
         _id
@@ -59,17 +53,17 @@ export const ADD_COMMENT = gql`
   }
 `;
 
-export const REMOVE_MONSTER = gql`
-  mutation removeMonster($monsterId: ID!) {
-    removeMonster(monsterId: $monsterId) {
+export const REMOVE_HOBBY = gql`
+  mutation removeHobby($hobbyId: ID!) {
+    removeHobby(hobbyId: $hobbyId) {
       _id
     }
   }
 `;
 
 export const REMOVE_COMMENT = gql`
-  mutation removeComment($monsterId: ID!, $commentId: ID!) {
-    removeComment(monsterId: $monsterId, commentId: $commentId) {
+  mutation removeComment($hobbyId: ID!, $commentId: ID!) {
+    removeComment(hobbyId: $hobbyId, commentId: $commentId) {
       _id
       comments {
         _id
@@ -81,12 +75,12 @@ export const REMOVE_COMMENT = gql`
 
 export const UPDATE_COMMENT = gql`
   mutation updateComment(
-    $monsterId: ID!
+    $hobbyId: ID!
     $commentId: ID!
     $commentText: String!
   ) {
     updateComment(
-      monsterId: $monsterId
+      hobbyId: $hobbyId
       commentId: $commentId
       commentText: $commentText
     ) {
@@ -99,26 +93,20 @@ export const UPDATE_COMMENT = gql`
   }
 `;
 
-export const UPDATE_MONSTER = gql`
-  mutation updateMonster(
-    $monsterId: ID!
-    $monsterName: String
-    $type: String
-    $habitat: String
-    $weaknesses: [String]
+export const UPDATE_HOBBY = gql`
+  mutation updateHobby(
+    $hobbyId: ID!
+    $name: String
+    $description: String
   ) {
-    updateMonster(
-      monsterId: $monsterId
-      monsterName: $monsterName
-      type: $type
-      habitat: $habitat
-      weaknesses: $weaknesses
+    updateHobby(
+      hobbyId: $hobbyId
+      name: $name
+      description: $descriptoin
     ) {
       _id
-      monsterName
-      type
-      habitat
-      weaknesses
+      name
+      description
     }
   }
 `;

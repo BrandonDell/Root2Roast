@@ -49,7 +49,7 @@ const HobbyForm = () => {
     }
   };
 
-  const handleRemoveDescprition = (index) => {
+  const handleRemoveDescription = (index) => {
     const updateddescriptions = formState.descriptions.filter(
       (_, idx) => idx !== index
     );
@@ -75,8 +75,8 @@ const HobbyForm = () => {
           ></textarea>
           <textarea
             name='description'
-            placeholder='What type of hobby is it?'
-            value={formState.type}
+            placeholder='Describe the hobby?'
+            value={formState.description}
             className='form-input w-100'
             style={{ lineHeight: "1.5", resize: "vertical" }}
             onChange={handleChange}
@@ -87,7 +87,7 @@ const HobbyForm = () => {
               type='text'
               placeholder='Enter a description'
               value={descriptionInput}
-              onChange={handledescriptionChange}
+              onChange={handleDescriptionChange}
             />
             <button type='button' onClick={handleAddDescription}>
               Add description
@@ -101,7 +101,7 @@ const HobbyForm = () => {
                   {description}
                   <button
                     type='button'
-                    onClick={() => handleRemovedescription(index)}
+                    onClick={() => handleRemoveDescription(index)}
                   >
                     Remove
                   </button>

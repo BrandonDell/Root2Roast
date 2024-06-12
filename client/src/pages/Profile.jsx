@@ -1,10 +1,10 @@
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import MonsterForm from "../components/MonsterForm";
-import MonsterList from "../components/MonsterList";
+import HobbyForm from '../components/HobbyForm';
+import HobbyList from '../components/HobbyList';
 
-import { QUERY_USER, QUERY_ME, QUERY_MONSTERS } from "../utils/queries";
+import { QUERY_USER, QUERY_ME, QUERY_HOBBIES } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
@@ -14,11 +14,11 @@ const Profile = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-  const { loading: loadingMonsters, data: monsterData } =
-    useQuery(QUERY_MONSTERS);
+  const { loading: loadingHobbies, data: hobbyData } =
+    useQuery(QUERY_HOBBIES);
 
   const user = data?.me || data?.user || {};
-  const monsters = monsterData?.monsters || [];
+  const hobbies = hobbyDataData?.hobbies  || [];
 
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
@@ -29,8 +29,8 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
-  if (loadingMonsters) {
-    return <div>Loading Monsters...</div>;
+  if (loadingHobbies) {
+    return <div>Loading Hobbies...</div>;
   }
 
   if (!user) {
@@ -42,8 +42,8 @@ const Profile = () => {
     );
   }
 
-  if (monsters.length === 0) {
-    return <h4>No monsters to display</h4>;
+  if (hobbies .length === 0) {
+    return <h4>No hobbies to display</h4>;
   }
 
   return (
@@ -54,13 +54,13 @@ const Profile = () => {
         </h2>
 
         <div className='col-12 col-md-10 mb-5'>
-          <MonsterList monsters={monsters} title='Witcher Monsters' />
+          <HobbyList hobbies ={hobbies } title='Hobbies' />
         </div>
         <div
           className='col-12 col-md-10 mb-3 p-3'
           style={{ border: "1px dotted #1a1a1a" }}
         >
-          <MonsterForm />
+          <HobbyForm />
         </div>
       </div>
     </div>

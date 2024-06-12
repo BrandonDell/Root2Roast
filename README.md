@@ -67,7 +67,7 @@ MIT
 
 ### Author's Github Links
 
-* Stephen Jastrow:
-* Lora Lainio:
-* Joevan Mills:
+* Stephen Jastrow: https://github.com/sjastrow92
+* Lora Lainio: https://github.com/l-lainio
+* Joevan Mills: https://github.com/jmacker101
 * Brandon Dell Cioppia: https://github.com/BrandonDell

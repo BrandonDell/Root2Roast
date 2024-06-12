@@ -1,18 +1,10 @@
-import React from 'react'
-
-const updateCommentForm = () => {
-  return (
-    <div>updateCommentForm</div>
-  )
-}
-
-export default updateCommentFormimport React, { useState } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_COMMENT } from "../../utils/mutations";
-import { QUERY_MONSTERS } from "../../utils/queries";
+import { QUERY_HOBBY } from "../../utils/queries";
 
 const UpdateCommentForm = ({
-  monsterId,
+  hobbyId,
   commentId,
   initialCommentText,
   handleCloseModal,
@@ -20,13 +12,13 @@ const UpdateCommentForm = ({
   const [commentText, setCommentText] = useState(initialCommentText);
 
   const [updateComment, { error }] = useMutation(UPDATE_COMMENT, {
-    refetchQueries: [{ query: QUERY_MONSTERS }],
+    refetchQueries: [{ query: QUERY_HOBBY }],
   });
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      await updateComment({ variables: { monsterId, commentId, commentText } });
+      await updateComment({ variables: { hobbyId, commentId, commentText } });
       await handleCloseModal();
     } catch (err) {
       console.error(err);
