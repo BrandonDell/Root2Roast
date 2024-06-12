@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Recipe from './components/Recipe';
+import Recipe from './components/RecipeApi';
 
 const App = () => {
     const [recipes, setRecipes] = useState([]);
