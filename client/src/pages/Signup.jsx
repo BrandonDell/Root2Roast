@@ -75,7 +75,7 @@ const Signup = () => {
                   name="username"
                   autoComplete="username"
                   autoFocus
-                  value={formState.username}
+                  value={formState.name}
                   onChange={handleChange}
                 />
                 <TextField

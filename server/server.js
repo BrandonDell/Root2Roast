@@ -5,8 +5,7 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-// import axios from 'axios';
-import cors from 'cors';
+const cors = require('cors');
 
 
 const PORT = process.env.PORT || 3001;
