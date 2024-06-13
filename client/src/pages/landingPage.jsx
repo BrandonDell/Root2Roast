@@ -1,47 +1,86 @@
-import React from "react";
-import { Container, Box, Typography } from "@mui/material";
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import axios from 'axios';
+import { Container } from 'react-bootstrap';
 
-const LandingPage = () => {
+const SearchBox = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+
+  const handleSearch = async (event) => {
+    setSearchTerm(event.target.value);
+    if (event.target.value) {
+      // Replace 'your-api-url' with the actual API endpoint
+      const response = await axios.get(`your-api-url?query=${event.target.value}`);
+      setResults(response.data);
+    } else {
+      setResults([]);
+    }
+  };
+
   return (
-    <Container
-      disableGutters
-      maxWidth={false}
+    <Container>
+    <Box
       sx={{
-        height: "80vh",
-        backgroundImage: `url(https://as1.ftcdn.net/v2/jpg/01/76/41/16/1000_F_176411659_7ezOdQ8WHONNzosFigRQETnlIIrd0tNx.jpg)`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        width: '300px',
+        position: 'fixed',
+        left: 0,
+        top: 85,
+        height: '80%',
+        bgcolor: 'background.paper',
+        p: 2,
+        boxShadow: 3,
       }}
     >
-      <Box sx={{
-        height:"100%",
-        width:"100%",
-        backgroundColor:"rgba(0, 0, 0, 0.3)"
-      }}>
-        <Box
-          sx={{
-            p: 3,
-          }}
-        >
-          <Typography variant="h1" gutterBottom sx={{ color: "#fff" }}>
-            Welcome
-          </Typography>
-          <Typography
-            variant="body1"
-            gutterBottom
-            sx={{ color: "#fff", width: "30%" }}
-          >
-            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore
-            consectetur, neque doloribus, cupiditate numquam dignissimos laborum
-            fugiat deleniti? Eum quasi quidem quibusdam.
-          </Typography>
-        </Box>
-      </Box>
+      <TextField
+        fullWidth
+        label="Search"
+        variant="outlined"
+        value={searchTerm}
+        onChange={handleSearch}
+      />
+      <List>
+        {results.map((result, index) => (
+          <ListItem key={index} button>
+            <ListItemText primary={result.name} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+
+     <Box
+      sx={{
+        width: '300px',
+        position: 'fixed',
+        right: 0,
+        top: 85,
+        height: '80%',
+        bgcolor: 'background.paper',
+        p: 2,
+        boxShadow: 3,
+      }}
+    >
+      <TextField
+        fullWidth
+        label="Search"
+        variant="outlined"
+        value={searchTerm}
+        onChange={handleSearch}
+      />
+      <List>
+        {results.map((result, index) => (
+          <ListItem key={index} button>
+            <ListItemText primary={result.name} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
     </Container>
   );
 };
 
-export default LandingPage;
-
+export default SearchBox;
