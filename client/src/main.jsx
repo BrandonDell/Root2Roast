@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
-import LandingPage from "./pages/test.jsx";
+import LandingPage from "./pages/LandingPage";
 const router = createBrowserRouter([
   {
     path: "/",
