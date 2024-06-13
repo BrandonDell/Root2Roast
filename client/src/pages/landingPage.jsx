@@ -6,7 +6,7 @@ const LandingPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Plant name:", plantName);
+
     // Perform form submission logic here (e.g., send data to server)
   };
 
@@ -23,11 +23,8 @@ const LandingPage = () => {
       }}
     >
       <Box
-      className="test"
+        className="test"
         sx={{
-          // can put the put on the left side the of landing page
-          //   height: "100%",
-          //   width: "100%",
           backgroundColor: "rgba(0, 0, 0, 0.3)",
           color: "black !important",
           width: "300px",
@@ -50,7 +47,7 @@ const LandingPage = () => {
         >
           Welcome! Enter the name of your plant below.
         </Typography>
-        <Form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <TextField
             label="Plant Name"
             variant="filled"
@@ -62,7 +59,7 @@ const LandingPage = () => {
           <Button type="submit" variant="contained">
             Submit
           </Button>
-        </Form>
+        </form>
       </Box>
     </Container>
   );
