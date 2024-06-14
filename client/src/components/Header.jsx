@@ -25,6 +25,8 @@ const Header = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            to="/"
+            component={Link}
           >
             <YardIcon />
           </IconButton>
