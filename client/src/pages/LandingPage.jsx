@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import { Container, Box, Typography, TextField, Button } from "@mui/material";
+
+import { Container,Grid, Typography } from "@mui/material";
+import { Planform, } from "../components/planform";
+import { Ingredientform } from "../components/Ingredientform";
 
 const LandingPage = () => {
-  const [plantName, setPlantName] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // Perform form submission logic here (e.g., send data to server)
-  };
 
   return (
     <Container
@@ -22,46 +18,28 @@ const LandingPage = () => {
         backgroundPosition: "center",
       }}
     >
-      <Box
-        className="test"
-        sx={{
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
-          color: "black !important",
-          width: "300px",
-          position: "fixed",
-          left: 0,
-          top: 85,
-          height: "80%",
-          bgcolor: "background.paper",
-          p: 2,
-          boxShadow: 3,
-        }}
-      >
-        <Typography variant="h1" gutterBottom sx={{ color: "#black" }}>
-          Plant Form
-        </Typography>
-        <Typography
-          variant="body1"
-          gutterBottom
-          sx={{ color: "#fff", width: "100%" }}
-        >
-          Welcome! Enter the name of your plant below.
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Plant Name"
-            variant="filled"
-            value={plantName}
-            onChange={(event) => setPlantName(event.target.value)}
-            sx={{ width: "50%" }}
-            required
-          />
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
-        </form>
-      </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+          {/* left colum */}
+          <Planform/>
+            </Grid>
+            <Grid item xs={4}>
+                {/* middle colum */}
+                <Typography variant="h1" gutterBottom sx={{ color: "#black", fontSize: "50px" }}>
+      middle
+    </Typography>
+            </Grid>
+            <Grid/>
+            <Grid item xs={4}>
+                {/* right colum */}
+                <Typography variant="h1" gutterBottom sx={{ color: "#black", fontSize: "50px" }}>
+      <Ingredientform/>
+    </Typography>
+            </Grid>
+          </Grid>
     </Container>
   );
 };
+
+
 export default LandingPage;
