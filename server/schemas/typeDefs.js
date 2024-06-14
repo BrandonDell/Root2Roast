@@ -1,5 +1,3 @@
-// Need to followup and test users interests+hobby. Test hobby: description+members. Both with Mutations 
-
 const typeDefs = `
   type User {
     _id: ID
@@ -7,6 +5,7 @@ const typeDefs = `
     email: String
     password: String
     hobbies: [Hobby]
+    posts: [Post]
   }
 
   type Hobby {
@@ -22,27 +21,45 @@ const typeDefs = `
     commentAuthor: String
     createdAt: String
   }
-
-  type Auth {
-    token: ID!
-    user: User
+  {
+    type Post {
+      _id: ID!
+      postText: String!
+      postAuthor: String!
+      createdAt: String!
+    }
   }
-  input HobbyInput{
+    input HobbyInput{
     name: String!
     description: String!
   }
+  
   input CommentInput{
     commentText: String
     commentAuthor: String
     createdAt: String
   }
 
+  input PostInput {
+    postText: String!
+    postAuthor: String!
+    createdAt: String!
+  }
+
+  type Auth {
+    token: ID!
+    user: User
+  }
+
+
   type Query {
+    me: User
     users: [User]
     user(username: String!): User
     hobbies: [Hobby]
     hobby(hobbyId: ID!): Hobby
-    me: User
+    post: [Post]
+    post(postId: ID!): Post
   }
 
   type Mutation {
@@ -54,6 +71,9 @@ const typeDefs = `
     addComment(commentData: CommentInput!, hobbyId: ID!): Hobby
     updateComment(hobbyId: ID!, commentId: ID!, commentText: String!): Hobby
     removeComment(hobbyId: ID!, commentId: ID!): Hobby
+    addPost(postData: PostInput!): Post
+    updatePost(postId: ID!, postText: String!); Post
+    removePost(postId: ID!): Post
   }
 `;
 
