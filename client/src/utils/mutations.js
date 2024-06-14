@@ -25,14 +25,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_HOBBY = gql`
-  mutation addHobby(
-    $name: String!
-    $description: String!
-  ) {
-    addHobby(
-      name: $name
-      description: $description
-    ) {
+  mutation addHobby($hobbyData: HobbyInput!) {
+    addHobby(hobbyData: $hobbyData) {
       description
       name
       _id
@@ -41,8 +35,8 @@ export const ADD_HOBBY = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($hobbyId: ID!, $commentText: String!) {
-    addComment(hobbyId: $hobbyId, commentText: $commentText) {
+  mutation addComment($commentData: CommentInput!, $hobbyId: ID!) {
+    addComment(commentData: $commentData, hobbyId: $hobbyId) {
       _id
       comments {
         _id
@@ -74,16 +68,8 @@ export const REMOVE_COMMENT = gql`
 `;
 
 export const UPDATE_COMMENT = gql`
-  mutation updateComment(
-    $hobbyId: ID!
-    $commentId: ID!
-    $commentText: String!
-  ) {
-    updateComment(
-      hobbyId: $hobbyId
-      commentId: $commentId
-      commentText: $commentText
-    ) {
+  mutation updateComment($hobbyId: ID!, $commentId: ID!, $commentText: String!) {
+    updateComment(hobbyId: $hobbyId, commentId: $commentId, commentText: $commentText) {
       _id
       comments {
         _id
@@ -92,6 +78,7 @@ export const UPDATE_COMMENT = gql`
     }
   }
 `;
+
 
 export const UPDATE_HOBBY = gql`
   mutation updateHobby(
@@ -102,7 +89,7 @@ export const UPDATE_HOBBY = gql`
     updateHobby(
       hobbyId: $hobbyId
       name: $name
-      description: $descriptoin
+      description: $description
     ) {
       _id
       name
@@ -110,3 +97,15 @@ export const UPDATE_HOBBY = gql`
     }
   }
 `;
+// export const ADD_POST = gpl` 
+// mutation addPost
+// }
+// `;
+// export const UPDATE_POST = gpl` 
+// mutation updatePost
+// }
+// `;
+// export const REMOVE_POST = gpl` 
+// mutation removePost
+// }
+// `;

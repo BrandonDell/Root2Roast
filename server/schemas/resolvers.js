@@ -1,26 +1,43 @@
-const { User, Hobby } = require("../models");
-const { signToken, AuthenticationError } = require("../utils/auth");
+const { AuthenticationError } = require('@apollo/server');
+const { User, Hobby, Post} = require("../models");
+const { signToken } = require("../utils/auth");
+
 
 const resolvers = {
   Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate("hobbies").populate('posts');
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    // me: async (parent, args, context) => {
+    //   if (context.user) {
+    //     return User.findById(context.user._id).populate('hobbies').populate('posts');
+    //   }
+    //   throw new AuthenticationError('Not logged in');
+    // },
     users: async () => {
-      return User.find().populate("hobbies");
+      return User.find().populate("hobbies").populate('posts');
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate("hobbies");
+      return User.findOne({ username }).populate("hobbies").populate('posts');
     },
     hobbies: async () => {
       return Hobby.find().sort({ name: 1 });
     },
+    // hobbies: async () => {
+    //   return Hobby.find();
+    // },
     hobby: async (parent, { hobbyId }) => {
       return Hobby.findOne({ _id: hobbyId });
     },
-    me: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("hobbies");
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    post: async (parent, args, context) => {
+      return Post.findOne({_id: postId })
     },
+    // hobby: async (parent, { hobbyId }) => {
+    //   return Hobby.findById(hobbyId);
+    // },
   },
 
   Mutation: {
@@ -46,14 +63,6 @@ const resolvers = {
 
       return { token, user };
     },
-    // addHobby: async (parent, { hobbyData }, context) => {
-    //   const hobby = await User.findByIdAndUpdate(
-    //     { _id: context.user._id },
-    //     { $push: { hobby: hobbyData } },
-    //     { new: true }
-        
-    //   );
-    // },
     
     addHobby: async (parent, { hobbyData }) => {
       const hobby = new Hobby(hobbyData);
@@ -66,7 +75,7 @@ const resolvers = {
           { _id: hobbyId },
           {
             $addToSet: {
-              comments: commentData,
+              comments: { ...commentData, commentAuthor: context.user.username },
             },
           },
           {
@@ -122,6 +131,32 @@ const resolvers = {
         { new: true }
       );
     },
+    addPost: async (parent, { postData }, context) => {
+      if (context.user) {
+        const post = await Post.create(postData);
+        return post;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    updatePost: async (parent, { postId, postText }, context) => {
+      if (context.user) {
+        const updatedPost = await Post.findByIdAndUpdate(
+          postId,
+          { postText },
+          { new: true, runValidators: true }
+        );
+        return updatedPost;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removePost: async (parent, { postId }, context) => {
+      if (context.user) {
+        const post = await Post.findByIdAndDelete(postId);
+        return post;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
   },
 };
 
