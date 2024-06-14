@@ -9,17 +9,17 @@ const cleanDB = require("./cleanDB");
 
 db.once("open", async () => {
   try {
-    await cleanDB("Hobby", "hobby");
+    await cleanDB("Hobby", "hobbies");
 
-    await cleanDB("User", "user");
+    await cleanDB("User", "users");
 
-    await cleanDB("Comment", "comment");
+    // await cleanDB("Comment", "comment");
 
-    await cleanDB("Post", "post");
+    await cleanDB("Post", "posts");
 
     await User.create(userSeeds);
 
-    await Comment.create(commentSeeds);
+    // await Comment.create(commentSeeds);
 
     await Hobby.create(hobbySeeds);
 

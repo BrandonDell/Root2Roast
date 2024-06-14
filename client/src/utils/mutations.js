@@ -97,15 +97,15 @@ export const UPDATE_HOBBY = gql`
     }
   }
 `;
-export const ADD_POST = gpl` 
-mutation addPost
-}
-`;
-export const UPDATE_POST = gpl` 
-mutation updatePost
-}
-`;
-export const REMOVE_POST = gpl` 
-mutation removePost
-}
-`;
+// export const ADD_POST = gpl` 
+// mutation addPost
+// }
+// `;
+// export const UPDATE_POST = gpl` 
+// mutation updatePost
+// }
+// `;
+// export const REMOVE_POST = gpl` 
+// mutation removePost
+// }
+// `;

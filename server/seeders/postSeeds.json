@@ -1,8 +1,4 @@
-[ {
-    "postText": "This is my first post!",
-    "postAuthor": "newuser",
-    "createdAt": "2024-06-12T12:00:00Z"
-  },
+[
   {
     "title": "Cooking Tips",
     "content": "Here are some tips to make your dishes taste even better. Always use fresh ingredients.",

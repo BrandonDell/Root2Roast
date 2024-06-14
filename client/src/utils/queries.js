@@ -53,7 +53,7 @@ export const QUERY_ME = gql`
     }
   }
 `;
-export const QUERY_Post = gql`
-  query getPost {
+// export const QUERY_Post = gql`
+//   query getPost {
   
-`;
+// `;

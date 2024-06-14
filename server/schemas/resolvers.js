@@ -1,4 +1,4 @@
-const { AuthenticationError } = require('apollo-server');
+const { AuthenticationError } = require('@apollo/server');
 const { User, Hobby, Post} = require("../models");
 const { signToken } = require("../utils/auth");
 
@@ -25,13 +25,15 @@ const resolvers = {
     },
     hobbies: async () => {
       return Hobby.find().sort({ name: 1 });
-
     },
     // hobbies: async () => {
     //   return Hobby.find();
     // },
     hobby: async (parent, { hobbyId }) => {
       return Hobby.findOne({ _id: hobbyId });
+    },
+    post: async (parent, args, context) => {
+      return Post.findOne({_id: postId })
     },
     // hobby: async (parent, { hobbyId }) => {
     //   return Hobby.findById(hobbyId);

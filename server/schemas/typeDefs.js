@@ -21,13 +21,13 @@ const typeDefs = `
     commentAuthor: String
     createdAt: String
   }
-  {
-    type Post {
+
+  type Post {
       _id: ID!
       postText: String!
       postAuthor: String!
       createdAt: String!
-    }
+      comments: [Comment]
   }
     input HobbyInput{
     name: String!
@@ -66,13 +66,13 @@ const typeDefs = `
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addHobby(hobbyData: HobbyInput!): Hobby
-    updateHobby(hobbyId: ID!, name: String, description: String!): Hobby
-    removeHobby(hobbyId: ID!): Hobby
-    addComment(commentData: CommentInput!, hobbyId: ID!): Hobby
+    updateHobby(hobbyId: ID, name: String!, description: String!): Hobby
+    removeHobby(hobbyId: ID): Hobby
+    addComment(commentData: CommentInput!, hobbyId: ID): Hobby
     updateComment(hobbyId: ID!, commentId: ID!, commentText: String!): Hobby
     removeComment(hobbyId: ID!, commentId: ID!): Hobby
     addPost(postData: PostInput!): Post
-    updatePost(postId: ID!, postText: String!); Post
+    updatePost(postId: ID!, postText: String!): Post
     removePost(postId: ID!): Post
   }
 `;
