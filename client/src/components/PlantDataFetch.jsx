@@ -1,69 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Button } from '@mui/material';
 
+function PlantDataFetch() {
+    const [data, setData] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [query, setQuery] = useState('');
+    const [error, setError] = useState(null);
 
-const PlantDataFetch = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  const [plantName, setPlantName] = useState('');
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get(`https://perenual.com/api/species-list?key=sk-JuFM666b2f4d3b8905917&q=${query}&edible=true`);
+                console.log(`https://perenual.com/api/species-list?key=sk-JuFM666b2f4d3b8905917&q=${query}`)
+                setData(response.data);
+                setError(null);
+            } catch (err) {
+                setError(err.message);
+                setData(null);
+            }
+        }
 
-  const fetchPlant = async () => {
-    const apiKey = process.env.REACT_APP_API_KEY; // Access environment variable
-    if (!apiKey) {
-      console.error('API key is missing');
-      setError(new Error('API key is missing'));
-      return;
-    }
+        if (query) {
+          console.log("value of query", query)
+            fetchData();
+        }
+    }, [query]);
 
-    const options = {
-      method: 'GET',
-      url: 'https://perenual.com/api/v1/plants',
-      params: { name: plantName },
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
     };
 
-    try {
-      const response = await axios.request(options);
-      setData(response.data);
-      console.log('Fetched data:', response.data);
-    } catch (error) {
-      console.error('Error fetching plant data:', error);
-      setError(error);
-    }
-  };
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        console.log ("searchTerm is",searchTerm)
+        setQuery(searchTerm);
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetchPlant();
-  };
-
-  return (
-    <Container>
-      <div>
-        <h1>Plant Data</h1>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={plantName}
-            onChange={(e) => setPlantName(e.target.value)}
-            placeholder="Enter plant name"
-          />
-          <Button type="submit" variant="contained" color="primary">
-            Search
-          </Button>
-        </form>
-        {error && <p>Error: {error.message}</p>}
-        <ul>
-          {data.map((item, index) => (
-            <li key={index}>{item.name}</li>
-          ))}
-        </ul>
-      </div>
-    </Container>
-  );
-};
+    return (
+        <div>
+            <h1>API Data</h1>
+            <form onSubmit={handleSearchSubmit}>
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    placeholder="Search for a plant"
+                />
+                <button type="submit">Search</button>
+            </form>
+            {error && <p style={{ color: 'red' }}>Error fetching data: {error}</p>}
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
+    );
+}
 
 export default PlantDataFetch;
