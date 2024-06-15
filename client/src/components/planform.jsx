@@ -75,6 +75,7 @@ export const Planform = () => {
           </Box>
         </form>
         {error && <p style={{ color: "red" }}>Error fetching data: {error}</p>}
+        {data && console.log(data)}
         {data && (
           <Grid container spacing={2}>
             {data?.data?.map((item) => {
@@ -84,7 +85,9 @@ export const Planform = () => {
                     title={item?.common_name}
                     scientificName={item?.scientific_name}
                     wateringInfo={item?.watering}
-                    sunlightInfo={item?.sunlight}
+                    sunlightInfo={
+                      Array.isArray(item?.sunlight) ? item?.sunlight : null
+                    }
                     img={item?.default_image?.original_url}
                   />
                 </Grid>

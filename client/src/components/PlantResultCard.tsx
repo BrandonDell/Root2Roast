@@ -29,23 +29,25 @@ const PlantResultCard = (props) => {
           <Typography variant="caption" color="text.secondary">
             Watering: {wateringInfo}
           </Typography>
-          <Box display="flex">
-            <Typography variant="caption" color="text.secondary">
-              Sunlight:
-            </Typography>
-            {sunlightInfo?.map((info, index) => {
-              return (
-                <Typography
-                  key={index}
-                  variant="caption"
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {info}
-                </Typography>
-              );
-            })}
-          </Box>
+          {sunlightInfo && (
+            <Box display="flex">
+              <Typography variant="caption" color="text.secondary">
+                Sunlight:
+              </Typography>
+              {sunlightInfo?.map((info, index) => {
+                return (
+                  <Typography
+                    key={index}
+                    variant="caption"
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {info}
+                  </Typography>
+                );
+              })}
+            </Box>
+          )}
         </CardContent>
       </CardActionArea>
     </Card>
