@@ -1,54 +1,95 @@
-import React, {useState} from 'react'
-import { Box, Typography, TextField, Button } from "@mui/material";
-export const Ingredientform = () => {
-    const [ingredientName, setIngredientName] = useState("");
+import React, { useState, useEffect } from "react";
+import { Box, Typography, TextField, Button, Grid } from "@mui/material";
+import axios from "axios";
+import IngredientResultCard from "./IngredientResultCard";
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-  
-      // Perform form submission logic here (e.g., send data to server)
-    };
-    return (
-    <div>
+export const Ingredientform = () => {
+  const [data, setData] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [query, setQuery] = useState("");
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=b51976f6&app_key=%204b58f8200ceb9dd0a25df2ef3bd593af%09
+`
+        );
+        console.log(
+          `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=b51976f6&app_key=%204b58f8200ceb9dd0a25df2ef3bd593af%09
+`
+        );
+        setData(response.data);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setData(null);
+      }
+    }
+
+    if (query) {
+      console.log("value of query", query);
+      fetchData();
+    }
+  }, [query]);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    console.log("hello");
+    console.log("searchTerm is", searchTerm);
+    setQuery(searchTerm);
+  };
+  return (
+    <Box
+      sx={{
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        height: "80vh",
+        p: 2,
+        boxShadow: 3,
+        overflow: "scroll",
+      }}
+    >
+      <form onSubmit={handleSearchSubmit}>
         <Box
-        className="test"
-        sx={{
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
-          color: "black !important",
-          width: "300px",
-          position: "fixed",
-          right: 0,
-          top: 85,
-          height: "80%",
-          bgcolor: "background.paper",
-          p: 2,
-          boxShadow: 3,
-        }}
-      >
-        <Typography variant="h1" gutterBottom sx={{ color: "#black", fontSize: "45px" }}>
-        Ingredient form
-        </Typography>
-        <Typography
-          variant="body1"
-          gutterBottom
-          sx={{ color: "#fff", width: "100%" }}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={3}
         >
-          List a ingredient below.
-        </Typography>
-        <form onSubmit={handleSubmit}>
           <TextField
-            label="Ingredient"
+            label="Enter ingredient here"
             variant="filled"
-            value={ingredientName}
-            onChange={(event) => setIngredientName(event.target.value)}
-            sx={{ width: "50%" }}
+            value={searchTerm}
+            onChange={handleSearchChange}
+            sx={{ width: "70%", backgroundColor: "#fff" }}
             required
           />
           <Button type="submit" variant="contained">
             Submit
           </Button>
-        </form>
-      </Box>
-    </div>
-    )
-}
+        </Box>
+      </form>
+      {error && <p style={{ color: "red" }}>Error fetching data: {error}</p>}
+      {data && (
+        <Grid container spacing={2}>
+          {data?.hits?.map((item, index) => {
+            return (
+              <Grid item xs={12}>
+                <IngredientResultCard
+                  title={item?.recipe?.label}
+                  img={item?.recipe?.image}
+                  ingredients={item?.recipe?.ingredientLines}
+                  url={item?.recipe?.shareAs}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
+    </Box>
+  );
+};
