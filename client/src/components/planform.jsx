@@ -47,18 +47,13 @@ export const Planform = () => {
   return (
     <div>
       <Box
-        className="test"
         sx={{
           backgroundColor: "rgba(0, 0, 0, 0.3)",
-          color: "black !important",
-          width: "300px",
-          position: "fixed",
-          left: 0,
-          top: 85,
-          height: "80%",
+          height: "80vh",
           bgcolor: "background.paper",
           p: 2,
           boxShadow: 3,
+          overflow: "scroll",
         }}
       >
         <Typography

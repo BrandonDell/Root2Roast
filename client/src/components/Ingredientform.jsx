@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import axios from "axios";
 export const Ingredientform = () => {
-
   const [data, setData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState("");
@@ -37,8 +36,8 @@ export const Ingredientform = () => {
       fetchData();
     }
   }, [query]);
-  
- const handleSearchChange = (event) => {
+
+  const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
   const handleSearchSubmit = (event) => {
@@ -48,52 +47,45 @@ export const Ingredientform = () => {
     setQuery(searchTerm);
   };
   return (
-    <div>
-      <Box
-        className="test"
-        sx={{
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
-          color: "black !important",
-          width: "300px",
-          position: "fixed",
-          right: 0,
-          top: 85,
-          height: "80%",
-          bgcolor: "background.paper",
-          p: 2,
-          boxShadow: 3,
-        }}
+    <Box
+      sx={{
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        height: "80vh",
+        bgcolor: "background.paper",
+        p: 2,
+        boxShadow: 3,
+        overflow: "scroll",
+      }}
+    >
+      <Typography
+        variant="h1"
+        gutterBottom
+        sx={{ color: "#black", fontSize: "45px" }}
       >
-        <Typography
-          variant="h1"
-          gutterBottom
-          sx={{ color: "#black", fontSize: "45px" }}
-        >
-          Ingredient form
-        </Typography>
-        <Typography
-          variant="body1"
-          gutterBottom
-          sx={{ color: "#fff", width: "100%" }}
-        >
-          List a ingredient below.
-        </Typography>
-        <form onSubmit={handleSearchSubmit}>
-          <TextField
-            label="Ingredient"
-            variant="filled"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            sx={{ width: "50%" }}
-            required
-          />
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
-        </form>
-         {error && <p style={{ color: "red" }}>Error fetching data: {error}</p>}
-        <p>{JSON.stringify(data, null, 2)}</p>
-      </Box>
-    </div>
+        Ingredient form
+      </Typography>
+      <Typography
+        variant="body1"
+        gutterBottom
+        sx={{ color: "#fff", width: "100%" }}
+      >
+        List a ingredient below.
+      </Typography>
+      <form onSubmit={handleSearchSubmit}>
+        <TextField
+          label="Ingredient"
+          variant="filled"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          sx={{ width: "50%" }}
+          required
+        />
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
+      </form>
+      {error && <p style={{ color: "red" }}>Error fetching data: {error}</p>}
+      <p>{JSON.stringify(data, null, 2)}</p>
+    </Box>
   );
 };
