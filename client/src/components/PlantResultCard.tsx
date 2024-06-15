@@ -7,7 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-const ResultCard = (props) => {
+const PlantResultCard = (props) => {
   const { title, scientificName, wateringInfo, sunlightInfo, img } = props;
 
   return (
@@ -17,7 +17,7 @@ const ResultCard = (props) => {
           component="img"
           height="140"
           image={img}
-          alt="green iguana"
+          alt="plant result"
         />
         <CardContent>
           <Typography variant="h6" component="div">
@@ -52,4 +52,4 @@ const ResultCard = (props) => {
   );
 };
 
-export default ResultCard;
+export default PlantResultCard;

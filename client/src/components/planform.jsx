@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button, Grid } from "@mui/material";
 import axios from "axios";
-import ResultCard from "./ResultCard";
+import PlantResultCard from "./PlantResultCard";
 
 export const Planform = () => {
-  const [plantName, setPlantName] = useState("");
   const [data, setData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState("");
   const [error, setError] = useState(null);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -31,11 +31,7 @@ export const Planform = () => {
       fetchData();
     }
   }, [query]);
-  const handleSubmit = (event) => {
-    event.preventDefault();
 
-    // Perform form submission logic here (e.g., send data to server)
-  };
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -52,19 +48,11 @@ export const Planform = () => {
         sx={{
           backgroundColor: "rgba(0, 0, 0, 0.3)",
           height: "80vh",
-          bgcolor: "background.paper",
           p: 2,
           boxShadow: 3,
           overflow: "scroll",
         }}
       >
-        <Typography
-          variant="body1"
-          gutterBottom
-          sx={{ color: "#fff", width: "100%" }}
-        >
-          Welcome! Enter the name of your plant below.
-        </Typography>
         <form onSubmit={handleSearchSubmit}>
           <Box
             display="flex"
@@ -76,9 +64,10 @@ export const Planform = () => {
               type="text"
               value={searchTerm}
               onChange={handleSearchChange}
-              sx={{ width: "50%" }}
+              sx={{ width: "70%", backgroundColor: "#fff" }}
               variant="filled"
               label="Enter plant name here"
+              required
             />
             <Button type="submit" variant="contained">
               Submit
@@ -91,7 +80,7 @@ export const Planform = () => {
             {data?.data?.map((item) => {
               return (
                 <Grid item xs={12}>
-                  <ResultCard
+                  <PlantResultCard
                     title={item?.common_name}
                     scientificName={item?.scientific_name}
                     wateringInfo={item?.watering}
