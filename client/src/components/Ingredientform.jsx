@@ -1,16 +1,55 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
+import axios from "axios";
 export const Ingredientform = () => {
-    const [ingredientName, setIngredientName] = useState("");
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
+  const [data, setData] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [query, setQuery] = useState("");
+  const [error, setError] = useState(null);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Perform form submission logic here (e.g., send data to server)
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `https://api.edamam.com/api/recipes/v2?type=user&q=tomato&app_id=b51976f6&app_key=%204b58f8200ceb9dd0a25df2ef3bd593af%09
+`
+        );
+        console.log(
+          `https://api.edamam.com/api/recipes/v2?type=user&q=tomato&app_id=b51976f6&app_key=%204b58f8200ceb9dd0a25df2ef3bd593af%09
+`
+        );
+        setData(response.data);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setData(null);
+      }
+    }
+
+    if (query) {
+      console.log("value of query", query);
+      fetchData();
+    }
+  }, [query]);
   
-      // Perform form submission logic here (e.g., send data to server)
-    };
-    return (
+ const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    console.log("hello");
+    console.log("searchTerm is", searchTerm);
+    setQuery(searchTerm);
+  };
+  return (
     <div>
-        <Box
+      <Box
         className="test"
         sx={{
           backgroundColor: "rgba(0, 0, 0, 0.3)",
@@ -25,8 +64,12 @@ export const Ingredientform = () => {
           boxShadow: 3,
         }}
       >
-        <Typography variant="h1" gutterBottom sx={{ color: "#black", fontSize: "45px" }}>
-        Ingredient form
+        <Typography
+          variant="h1"
+          gutterBottom
+          sx={{ color: "#black", fontSize: "45px" }}
+        >
+          Ingredient form
         </Typography>
         <Typography
           variant="body1"
@@ -35,12 +78,12 @@ export const Ingredientform = () => {
         >
           List a ingredient below.
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSearchSubmit}>
           <TextField
             label="Ingredient"
             variant="filled"
-            value={ingredientName}
-            onChange={(event) => setIngredientName(event.target.value)}
+            value={searchTerm}
+            onChange={handleSearchChange}
             sx={{ width: "50%" }}
             required
           />
@@ -48,7 +91,9 @@ export const Ingredientform = () => {
             Submit
           </Button>
         </form>
+         {error && <p style={{ color: "red" }}>Error fetching data: {error}</p>}
+        <p>{JSON.stringify(data, null, 2)}</p>
       </Box>
     </div>
-    )
-}
+  );
+};

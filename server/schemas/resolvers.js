@@ -33,7 +33,7 @@ const resolvers = {
       return Hobby.findOne({ _id: hobbyId });
     },
     post: async (parent, args, context) => {
-      return Post.findOne({_id: postId })
+      return Post.findOne({_id: args.postId })
     },
     // hobby: async (parent, { hobbyId }) => {
     //   return Hobby.findById(hobbyId);

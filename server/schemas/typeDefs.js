@@ -58,7 +58,7 @@ const typeDefs = `
     user(username: String!): User
     hobbies: [Hobby]
     hobby(hobbyId: ID!): Hobby
-    post: [Post]
+   # post: [Post]
     post(postId: ID!): Post
   }
 

@@ -32,6 +32,7 @@ function PlantDataFetch() {
 
     const handleSearchSubmit = (event) => {
         event.preventDefault();
+        console.log("hello")
         console.log ("searchTerm is",searchTerm)
         setQuery(searchTerm);
     };
