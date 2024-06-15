@@ -52,6 +52,8 @@ const Login = (props) => {
     });
   };
 
+  const isLoggedIn = Auth.loggedIn();
+
   return (
     <Container component="main" maxWidth="sm">
       <Box display="flex" flexDirection="column" alignItems="center" mt={10}>
@@ -61,7 +63,7 @@ const Login = (props) => {
             sx={{ color: "black", p: 2, textAlign: "center" }}
           />
           <CardContent>
-            {data ? (
+            {isLoggedIn ? (
               <Typography variant="body1">
                 Success! You may now head{" "}
                 <Link to="/">back to the homepage.</Link>
