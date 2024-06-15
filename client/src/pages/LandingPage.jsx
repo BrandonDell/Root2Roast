@@ -23,11 +23,11 @@ const LandingPage = () => {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             {/* left colum */}
             <Planform />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             {/* middle colum */}
             <Typography
               variant="h1"
@@ -37,7 +37,7 @@ const LandingPage = () => {
               middle
             </Typography>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             {/* right colum */}
             <Typography
               variant="h1"

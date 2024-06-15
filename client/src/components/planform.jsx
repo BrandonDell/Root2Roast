@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, Grid } from "@mui/material";
 import axios from "axios";
+import ResultCard from "./ResultCard";
+
 export const Planform = () => {
   const [plantName, setPlantName] = useState("");
   const [data, setData] = useState(null);
@@ -57,35 +59,50 @@ export const Planform = () => {
         }}
       >
         <Typography
-          variant="h1"
-          gutterBottom
-          sx={{ color: "#black", fontSize: "50px" }}
-        >
-          Plant Form
-        </Typography>
-        <Typography
           variant="body1"
           gutterBottom
           sx={{ color: "#fff", width: "100%" }}
         >
           Welcome! Enter the name of your plant below.
         </Typography>
-
         <form onSubmit={handleSearchSubmit}>
-          <TextField
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            sx={{ width: "50%" }}
-            variant="filled"
-            label="Plant Name"
-          />
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={3}
+          >
+            <TextField
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              sx={{ width: "50%" }}
+              variant="filled"
+              label="Enter plant name here"
+            />
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          </Box>
         </form>
         {error && <p style={{ color: "red" }}>Error fetching data: {error}</p>}
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+        {data && (
+          <Grid container spacing={2}>
+            {data?.data?.map((item) => {
+              return (
+                <Grid item xs={12}>
+                  <ResultCard
+                    title={item?.common_name}
+                    scientificName={item?.scientific_name}
+                    wateringInfo={item?.watering}
+                    sunlightInfo={item?.sunlight}
+                    img={item?.default_image?.original_url}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
+        )}
       </Box>
     </div>
   );

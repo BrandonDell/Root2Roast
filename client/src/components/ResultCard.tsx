@@ -11,7 +11,7 @@ const ResultCard = (props) => {
   const { title, scientificName, wateringInfo, sunlightInfo, img } = props;
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -20,24 +20,24 @@ const ResultCard = (props) => {
           alt="green iguana"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography variant="h6" component="div">
             {title}
           </Typography>
-          <Typography variant="subtitle2" color="text.secondary">
+          <Typography variant="caption" color="text.secondary">
             Scientific Name: {scientificName[0]}
           </Typography>
-          <Typography variant="subtitle2" color="text.secondary">
+          <Typography variant="caption" color="text.secondary">
             Watering: {wateringInfo}
           </Typography>
           <Box display="flex">
-            <Typography variant="subtitle2" color="text.secondary">
+            <Typography variant="caption" color="text.secondary">
               Sunlight:
             </Typography>
             {sunlightInfo?.map((info, index) => {
               return (
                 <Typography
                   key={index}
-                  variant="body2"
+                  variant="caption"
                   color="text.secondary"
                   gutterBottom
                 >
