@@ -7,7 +7,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
 import LandingPage from "./pages/LandingPage";
-import PlantDataFetch from "./components/PlantDataFetch.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,10 +30,7 @@ const router = createBrowserRouter([
         path: "/landingPage",
         element: <LandingPage />,
       },
-      {
-        path: "/testPlants",
-        element: <PlantDataFetch />
-      },
+      
       // {
       //   path: "/testEdamam",
       //   element: <RecipeDataFetch />

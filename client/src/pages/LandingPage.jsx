@@ -1,36 +1,57 @@
-import { Container, Box, Grid } from "@mui/material";
-import UserMediaCard from "../components/UserMediaCard";
-import { PlantIdCard } from "../components/PlantIdCard";
-// import { Ingredientform } from "../components/Ingredientform";
+import { Container, Grid, Typography, Box } from "@mui/material";
+import { Planform } from "../components/planform";
+import { Ingredientform } from "../components/Ingredientform";
 
 const LandingPage = () => {
-
-
   return (
     <Container
       disableGutters
       maxWidth={false}
       sx={{
-        height: "80vh",
+        height: "100vh",
         backgroundImage: `url(https://as1.ftcdn.net/v2/jpg/01/76/41/16/1000_F_176411659_7ezOdQ8WHONNzosFigRQETnlIIrd0tNx.jpg)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={3} sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
+
+      <Box
+        sx={{
+          flexgrow: 1,
+          height: "100%",
+          width: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
+        }}
+      >
+        <Grid container spacing={2} sx={{
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))"
+        }}>
           <Grid item xs={12} md={3}>
-            {/* left column */}
+            {/* left colum */}
             {/* <PlantIdCard></PlantIdCard> */}
+            <Planform />
           </Grid>
           <Grid item xs={12} md={6}>
-            {/* middle column */}
+            {/* middle colum */}
+            <Typography
+              variant="h1"
+              gutterBottom
+              sx={{ color: "#black", fontSize: "50px" }}
+            >
+              middle
+            </Typography>
             <UserMediaCard></UserMediaCard>
           </Grid>
           <Grid item xs={12} md={3}>
-            {/* right column */}
-            {/* <Ingredientform/> */}
+            {/* right colum */}
+            <Typography
+              variant="h1"
+              gutterBottom
+              sx={{ color: "#black", fontSize: "50px" }}
+            >
+              <Ingredientform />
+            </Typography>
           </Grid>
         </Grid>
       </Box>

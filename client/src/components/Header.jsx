@@ -1,4 +1,5 @@
 import React from "react";
+import Auth from "../utils/auth";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -10,6 +11,13 @@ import YardIcon from "@mui/icons-material/Yard";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const isLoggedIn = Auth.loggedIn();
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+    Auth.logout();
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -33,12 +41,20 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Root2Roast
           </Typography>
-          <Button color="inherit" component={Link} to="/login">
-            Login
-          </Button>
-          <Button color="inherit" component={Link} to="/signup">
-            Sign Up
-          </Button>
+          {isLoggedIn ? (
+            <Button color="inherit" component={Link} onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Button color="inherit" component={Link} to="/login">
+                Login
+              </Button>
+              <Button color="inherit" component={Link} to="/signup">
+                Sign Up
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
