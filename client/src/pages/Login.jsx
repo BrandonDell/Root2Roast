@@ -16,12 +16,13 @@ import {
   Typography,
   Alert,
 } from "@mui/material";
+import { UserContextRef } from "../App";
 
 const Login = (props) => {
   console.log("login-props", props)
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
-  // console.log(data);
+  console.log(data);
 
 
   // update state based on form input changes
@@ -44,6 +45,9 @@ const Login = (props) => {
       });
 
       Auth.login(data.login.token);
+    UserContextRef.current.token=data.login.token
+    UserContextRef.current.user.username=data.login.user.username
+
     } catch (e) {
       console.error(e);
     }

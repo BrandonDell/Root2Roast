@@ -12,32 +12,51 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 // import { useMutation } from "@apollo/client";
 // import { LOGIN_USER } from "../utils/mutations";
-import { useContext } from "react";
+import { useContext, createContext, createRef, useImperativeHandle } from "react";
 
-const UserContext = {
+export const UserContextRef = createRef()
+
+export const UserContext = createContext({
   token: {},
   user: {
     id: 0,
     username: '',
   }
-}
+})
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
 
+const UserContextProvider = ({ children }) => {
+  const contextValue = {
+    token: localStorage.getItem("id_token") || "",
+    user:{
+      id:0,
+      username: "",
+    }
+  }
+useImperativeHandle(UserContextRef, () => contextValue)
+
+  return (
+    <UserContext.Provider value={contextValue}>
+      {children}
+    </UserContext.Provider>
+
+  )
+}
+
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem("id_token");
-  const userContext = useContext(UserContext);
+
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
-      userContext
     },
   };
 });
@@ -54,11 +73,11 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      {/* <UserContext.Provider value={userContext}> */}
+      <UserContextProvider>
         <Header />
         <Outlet />
         <Footer />
-      {/* </UserContext.Provider> */}
+      </UserContextProvider>
     </ApolloProvider>
   );
 }
