@@ -1,7 +1,7 @@
-
-import { Container,Grid, Typography } from "@mui/material";
-import { Planform, } from "../components/planform";
-import { Ingredientform } from "../components/Ingredientform";
+import { Container, Box, Grid } from "@mui/material";
+import UserMediaCard from "../components/UserMediaCard";
+import { PlantIdCard } from "../components/PlantIdCard";
+// import { Ingredientform } from "../components/Ingredientform";
 
 const LandingPage = () => {
 
@@ -18,28 +18,24 @@ const LandingPage = () => {
         backgroundPosition: "center",
       }}
     >
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-          {/* left colum */}
-          <Planform/>
-            </Grid>
-            <Grid item xs={4}>
-                {/* middle colum */}
-                <Typography variant="h1" gutterBottom sx={{ color: "#black", fontSize: "50px" }}>
-      middle
-    </Typography>
-            </Grid>
-            <Grid/>
-            <Grid item xs={4}>
-                {/* right colum */}
-                <Typography variant="h1" gutterBottom sx={{ color: "#black", fontSize: "50px" }}>
-      <Ingredientform/>
-    </Typography>
-            </Grid>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={3} sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
+          <Grid item xs={12} md={3}>
+            {/* left column */}
+            {/* <PlantIdCard></PlantIdCard> */}
           </Grid>
+          <Grid item xs={12} md={6}>
+            {/* middle column */}
+            <UserMediaCard></UserMediaCard>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            {/* right column */}
+            {/* <Ingredientform/> */}
+          </Grid>
+        </Grid>
+      </Box>
     </Container>
   );
 };
-
 
 export default LandingPage;
