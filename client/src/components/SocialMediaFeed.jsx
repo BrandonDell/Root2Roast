@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 
-const SocialMediaFeed = () => {
+const SocialMediaFeed = (props) => {
+  console.log("socialmediafeed-props", props)
   const [open, setOpen] = useState(false);
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState({ subject: '', content: '' });
@@ -39,9 +40,6 @@ const SocialMediaFeed = () => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Create Post
-      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create a new post</DialogTitle>
         <DialogContent>
@@ -66,6 +64,9 @@ const SocialMediaFeed = () => {
           />
         </DialogContent>
         <DialogActions>
+          <Button variant="contained" color="primary" onClick={handleClickOpen}>
+            Create Post
+          </Button>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
@@ -81,12 +82,15 @@ const SocialMediaFeed = () => {
               primary={`${post.username}: ${post.subject}`}
               secondary={post.content}
             />
+            {props.token && post.username === props.username(
             <IconButton edge="end" aria-label="edit" onClick={() => handleUpdate(post.id)}>
               <Edit />
             </IconButton>
             <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(post.id)}>
               <Delete />
             </IconButton>
+
+            )}
           </ListItem>
         ))}
       </List>

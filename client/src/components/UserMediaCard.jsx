@@ -27,7 +27,7 @@ const UserMediaCard = ({ title, description, imageUrl, children }) => {
                     }}
                 />
                 <CardContent>
-                    {SocialMediaFeed}
+                    <SocialMediaFeed />
                     {/* {notifications} */}
                     <Typography gutterBottom variant="h5" component="div">
                         {title}
@@ -36,7 +36,7 @@ const UserMediaCard = ({ title, description, imageUrl, children }) => {
                         {description}
                     </Typography>
                 </CardContent>
-                {children} {/* Render children components here */}
+                {/* {children} Render children components here */}
             </Card>
             <Card
                 sx={{
@@ -60,7 +60,7 @@ const UserMediaCard = ({ title, description, imageUrl, children }) => {
                     }}
                 />
                 <CardContent>
-                    {SocialMediaFeed}
+                    <SocialMediaFeed />
                     {/* {notifications} */}
                     <Typography gutterBottom variant="h5" component="div">
                         {title}
@@ -69,7 +69,7 @@ const UserMediaCard = ({ title, description, imageUrl, children }) => {
                         {description}
                     </Typography>
                 </CardContent>
-                {children} {/* Render children components here */}
+                {/* {children} Render children components here */}
             </Card>
         </>
     );

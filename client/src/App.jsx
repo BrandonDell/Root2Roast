@@ -10,8 +10,17 @@ import { Outlet } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { Container } from "@mui/material";
+// import { useMutation } from "@apollo/client";
+// import { LOGIN_USER } from "../utils/mutations";
+import { useContext } from "react";
 
+const UserContext = {
+  token: {},
+  user: {
+    id: 0,
+    username: '',
+  }
+}
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -22,11 +31,13 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem("id_token");
+  const userContext = useContext(UserContext);
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
+      userContext
     },
   };
 });
@@ -38,11 +49,16 @@ const client = new ApolloClient({
 });
 
 function App() {
+  // const [login, { error, data }] = useMutation(LOGIN_USER);
+  // console.log(data);
+
   return (
     <ApolloProvider client={client}>
-      <Header />
-      <Outlet />
-      <Footer />
+      {/* <UserContext.Provider value={userContext}> */}
+        <Header />
+        <Outlet />
+        <Footer />
+      {/* </UserContext.Provider> */}
     </ApolloProvider>
   );
 }

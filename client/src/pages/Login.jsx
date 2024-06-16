@@ -18,8 +18,11 @@ import {
 } from "@mui/material";
 
 const Login = (props) => {
+  console.log("login-props", props)
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
+  // console.log(data);
+
 
   // update state based on form input changes
   const handleChange = (event) => {

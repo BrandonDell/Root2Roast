@@ -1,6 +1,7 @@
 import { Container, Grid, Typography, Box } from "@mui/material";
 import { Planform } from "../components/planform";
 import { Ingredientform } from "../components/Ingredientform";
+import  UserMediaCard  from "../components/UserMediaCard";
 
 const LandingPage = () => {
   return (
@@ -34,24 +35,11 @@ const LandingPage = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             {/* middle colum */}
-            <Typography
-              variant="h1"
-              gutterBottom
-              sx={{ color: "#black", fontSize: "50px" }}
-            >
-              middle
-            </Typography>
-            <UserMediaCard></UserMediaCard>
+            <UserMediaCard />
           </Grid>
           <Grid item xs={12} md={3}>
             {/* right colum */}
-            <Typography
-              variant="h1"
-              gutterBottom
-              sx={{ color: "#black", fontSize: "50px" }}
-            >
-              <Ingredientform />
-            </Typography>
+            <Ingredientform />
           </Grid>
         </Grid>
       </Box>
