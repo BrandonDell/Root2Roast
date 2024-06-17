@@ -1,6 +1,8 @@
 import { Container, Grid, Typography, Box } from "@mui/material";
 import { Planform } from "../components/planform";
-import { Ingredientform } from "../components/Ingredientform";
+import { Ingredientform } from '../components/Ingredientform';
+import  BasicGrid  from '../components/UserFeed';
+
 
 const LandingPage = () => {
   return (
@@ -8,7 +10,7 @@ const LandingPage = () => {
       disableGutters
       maxWidth={false}
       sx={{
-        height: "100vh",
+        height: '100vh',
         backgroundImage: `url(https://as1.ftcdn.net/v2/jpg/01/76/41/16/1000_F_176411659_7ezOdQ8WHONNzosFigRQETnlIIrd0tNx.jpg)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -34,7 +36,7 @@ const LandingPage = () => {
               gutterBottom
               sx={{ color: "#black", fontSize: "50px" }}
             >
-              middle
+             <BasicGrid/>
             </Typography>
           </Grid>
           <Grid item xs={12} md={3}>
