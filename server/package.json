@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "seed": "node seeders/seed.js",
-    "watch": "nodemon server.js"
+    "watch": "nodemon server.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
