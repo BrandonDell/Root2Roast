@@ -14,11 +14,13 @@ const Home = () => {
         backgroundPosition: "center",
       }}
     >
-      <Box sx={{
-        height:"100%",
-        width:"100%",
-        backgroundColor:"rgba(0, 0, 0, 0.3)"
-      }}>
+      <Box
+        sx={{
+          height: "100%",
+          width: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
+        }}
+      >
         <Box
           sx={{
             p: 3,
@@ -32,10 +34,14 @@ const Home = () => {
             gutterBottom
             sx={{ color: "#fff", width: "30%" }}
           >
-            body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore
-            consectetur, neque doloribus, cupiditate numquam dignissimos laborum
-            fugiat deleniti? Eum quasi quidem quibusdam.
+            In a world where sustainable living and culinary creativity go hand
+            in hand, Root2Roast emerges as your perfect companion. This
+            innovative app bridges the gap between garden and kitchen,
+            empowering you to explore the full journey of your favorite plants
+            and ingredients. Whether you’re an aspiring gardener looking to
+            cultivate your green thumb or a culinary enthusiast eager to
+            discover new recipes, Root2Roast is here to guide you every step of
+            the way.
           </Typography>
         </Box>
       </Box>
